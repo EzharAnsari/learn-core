@@ -1,0 +1,27 @@
+// for creating a new app
+ - dotnet new webapi
+
+// running app
+ - dotnet run
+
+// installing EntityFrameworkCore
+ - dotnet tool install --global dotnet-ef --version 6.5.1 // you can change the version (default -> latest version)
+
+// test EntityFrameworkCore install
+ - dotnet ef
+
+// for restore packages
+ - dotnet restore
+
+// for adding a package
+ - dotnet add package "package-name"
+ - dotnet add package Microsoft.EntityFrameworkCore.Design
+
+ using nuget package manager extension
+ 1. ctrl + shift + p 
+ 2. select "Nuget Package Manager: Add Package"
+ 3. write the name of the package and select from the list
+ 4. select the version
+
+// for connecting postgres sql database
+dotnet ef dbcontext scaffold "Server=localhost;Database=mq_db;User Id=postgres;Password=qwerty;Port=5432;" Npgsql.EntityFrameworkCore.PostgreSQL --output-dir Models
