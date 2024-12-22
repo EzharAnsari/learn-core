@@ -22,19 +22,39 @@ public class ProductController : ControllerBase
         return Ok(products);
     }
 
-    [HttpGet("GetById{id}")]
+    [HttpGet("GetById/{id}")]
     public IActionResult GetById(int id)
     {
         var product = _DbContext.Messages.FirstOrDefault( o => o.Id == id);
         return Ok(product);
     }
 
-    [HttpDelete("RemoveById{id}")]
+    [HttpDelete("RemoveById/{id}")]
     public IActionResult RemoveById(int id) {
         var product = this._DbContext.Messages.FirstOrDefault( o => o.Id == id);
 
         if(product != null) {
-            this._DbContext.Remove(product);
+            this._DbContext.Messages.Remove(product);
+            this._DbContext.SaveChanges();
+            return Ok(true);
+        }
+
+        return Ok(false);
+    }
+
+    [HttpPost("Create")]
+    public IActionResult Create([FromBody] Message _message) {
+        var message = this._DbContext.Messages.FirstOrDefault( o => o.Id == _message.Id);
+
+        if(message != null) {
+            message.Content = _message.Content;
+            message.Status = _message.Status;
+            // this._DbContext.Messages.Update(message);
+            this._DbContext.SaveChanges();
+            return Ok(true);
+        } else {
+            this._DbContext.Messages.Add(_message);
+            this._DbContext.SaveChanges();
             return Ok(true);
         }
 
