@@ -5,14 +5,19 @@ using Basic.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options; 
+using Microsoft.Extensions.Options;
+using NetTopologySuite;
+using NetTopologySuite.Geometries;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext> (options => {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
+        npgsqlOptions => npgsqlOptions.UseNetTopologySuite());  // integarating NetTopologySuite with EntityFramework
 });
+builder.Services.AddSingleton<GeometryFactory>(NtsGeometryServices.
+    Instance.CreateGeometryFactory(srid: 4326));  // Registering 
 builder.Services.AddCors( options => 
 {
     options.AddDefaultPolicy ( helper => 

@@ -13,5 +13,6 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1"/>
     <PackageReference Include="AutoMapper" Version="8.0.0"/>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0"/>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" Version="6.0.1"/>
   </ItemGroup>
 </Project>
