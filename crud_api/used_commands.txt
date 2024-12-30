@@ -25,3 +25,7 @@
 
 // for connecting postgres sql database
 dotnet ef dbcontext scaffold "Server=localhost;Database=mq_db;User Id=postgres;Password=qwerty;Port=5432;" Npgsql.EntityFrameworkCore.PostgreSQL --output-dir Models
+
+// for Initial migration and update database
+ - dotnet ef migrations add initial
+ - dotnet ef database update
