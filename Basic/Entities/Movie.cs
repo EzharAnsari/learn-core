@@ -15,5 +15,6 @@ namespace Basic.Entities
         public string Poster { get; set; }
         public List<MoviesGenres> MoviesGenres { get; set; }  // many to many relationship with Movie and Genre model
         public List<MovieTheatersMovies> MovieTheatersMovies { get; set; }
+        public List<MoviesActors> MoviesActors { get; set; }
     }
 }
