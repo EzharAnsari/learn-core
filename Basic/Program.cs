@@ -16,8 +16,7 @@ builder.Services.AddDbContext<ApplicationDbContext> (options => {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
         npgsqlOptions => npgsqlOptions.UseNetTopologySuite());  // integarating NetTopologySuite with EntityFramework
 });
-builder.Services.AddSingleton<GeometryFactory>(NtsGeometryServices.
-    Instance.CreateGeometryFactory(srid: 4326));  // Registering 
+
 builder.Services.AddCors( options => 
 {
     options.AddDefaultPolicy ( helper => 
@@ -29,6 +28,12 @@ builder.Services.AddCors( options =>
     });
 });
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddSingleton(provider => new MapperConfiguration(config => {
+    var geometryFactory = provider.GetRequiredService<GeometryFactory>();
+    config.AddProfile(new AutoMapperProfiles(geometryFactory));
+}).CreateMapper());
+builder.Services.AddSingleton<GeometryFactory>(NtsGeometryServices.
+    Instance.CreateGeometryFactory(srid: 4326));  // Registering 
 builder.Services.AddControllers( options => {
     options.Filters.Add( typeof (MyExceptionFilter));
 });
