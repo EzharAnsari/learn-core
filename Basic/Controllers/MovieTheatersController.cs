@@ -14,7 +14,7 @@ namespace Basic.Controller
         private readonly ILogger logger;
         private readonly IMapper mapper;
 
-        public MovieTheatersController(ApplicationDbContext context, ILogger logger, IMapper mapper)
+        public MovieTheatersController(ApplicationDbContext context, IMapper mapper)
         {
             this.context = context;
             this.logger = logger;
@@ -24,7 +24,7 @@ namespace Basic.Controller
         [HttpGet]
         public async Task<ActionResult<List<MovieTheaterDTO>>> Get()
         {
-            var entities = await context.MovieTheaters.ToListAsync();
+            var entities = await context.MovieTheaters.OrderBy(x => x.Name).ToListAsync();
             return mapper.Map<List<MovieTheaterDTO>>(entities);
         }
 
